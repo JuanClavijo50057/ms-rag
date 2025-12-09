@@ -4,14 +4,20 @@ import { Request, Response } from "express";
 export const ragChat = async (req: Request, res: Response) => {
   try {
     const { question } = req.body;
+    const userId = req.userId;
 
-    const sessionId = "test-user-1";
+    if (!userId) {
+      return res.status(400).json({ message: "User ID not found in token" });
+    }
+
+    const sessionId = `user-${userId}`;
 
     const n8nResponse = await axios.post(
       process.env.N8N_WEBHOOK_URL!,
-      { question,
+      { 
+        question,
         sessionId
-       }
+      }
     );
 
     return res.json({
