@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import ragRoutes from "./routes/rag.routes";
+import agentRoutes from "./routes/agent.routes";
 import { securityMiddleware } from "./middleware/security";
 import { corsOptions } from "./config/cors.config";
 
@@ -14,6 +15,7 @@ app.use(express.json());
 
 // Todas las rutas de rag requieren seguridad
 app.use("/rag", securityMiddleware, ragRoutes);
+app.use("/agent", securityMiddleware, agentRoutes);
 
 const PORT = process.env.PORT || 3005;
 
